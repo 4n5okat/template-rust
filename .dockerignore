@@ -6,33 +6,36 @@
 # 共通除外ファイル・ディレクトリ
 #-------------------------------------
 
-# packages
-**/node_modules/
+# Docker
+.dockerignore
+compose.yml
+compose.build.yml
 
-# git
-**/.git
-**/.gitignore
+# Git
+.git
+.gitignore
 
-# readme
-**/README.md
-**/LICENSE
+# VS Code Editor
+.vscode
+.devcontainer
+.editorconfig
 
-# logs
-**/npm-debug.log
-**/*.log
+# environment variable file
+.env
+.env.example
 
-# test
-**/coverage
-**/test
+# document
+README.md
+/docs
 
-# editor
-**/.vscode
-**/.editorconfig
+# etc
+/infrastructure
+Makefile
+API.rest
 
-# build
-**/dist
-**/build
+#-------------------------------------
+# Rust
+#-------------------------------------
 
-# secrets
-**/.aws
-**/.env
+# Rust
+target/

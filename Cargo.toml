@@ -1,0 +1,18 @@
+[package]
+name = "app"
+version = "1.0.0"
+edition = "2024"
+authors = ["4n5okat"]
+description = ""
+repository = ""
+readme = "README.md"
+license-file = ""
+keywords = [""]
+
+[dependencies]
+# フレームワーク
+actix-web = "4"
+
+# ログ
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["fmt", "json", "env-filter", "time"] }

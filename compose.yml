@@ -1,0 +1,22 @@
+services:
+
+  # Rust App(actix-web)
+  rust-actix-web:
+    container_name: rust-actix-web-${CONTAINER_NAME_SUFFIX}
+    build:
+      context: .
+      dockerfile: infrastructure/rust/Dockerfile
+      target: development
+    volumes:
+      - ./src:/app/src
+      - ./Cargo.toml:/app/Cargo.toml
+      - ./Cargo.lock:/app/Cargo.lock
+      - cargo-cache:/usr/local/cargo/registry
+    tty: true
+    env_file:
+      - .env
+    ports:
+      - ${CONTAINER_IP}:${ACTIXT_WEB_PORTS}:8080 # IPとPortを指定
+
+volumes:
+  cargo-cache:
