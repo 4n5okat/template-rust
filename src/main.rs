@@ -1,13 +1,18 @@
 // Actix Webの主要コンポーネントをインポート
-use actix_web::{get, App, HttpResponse, HttpServer, Responder};
+use actix_web::{App, HttpServer};
 
 // ログ
 use tracing_subscriber::fmt::format::FmtSpan;
 use tracing_subscriber::fmt::time::UtcTime;
 use tracing_subscriber::EnvFilter;
 
-use tracing::{info, warn, error, span, Level};
+// .envファイルの環境変数を読み込むためのクレート
+use dotenvy::dotenv;
 
+// ルーティングの初期化関数をインポート
+use app::infrastructure::web::routes::init_routes;
+
+// ログ設定の初期化
 fn init_logger() {
     tracing_subscriber::fmt()
         .with_timer(UtcTime::rfc_3339()) // ISO 8601 timestamp
@@ -19,22 +24,21 @@ fn init_logger() {
         .init();
 }
 
-#[get("/")]
-async fn hello() -> impl Responder {
-    info!("Access");
-    HttpResponse::Ok().body("Hello, world!")
-}
-
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
 
     // ロガーを初期化
     init_logger();
 
+    // `.env` ファイルを読み込んで環境変数を設定
+    dotenv().ok();
+
     // HTTPサーバーを起動
     HttpServer::new(move || {
         App::new()
-            .service(hello) // ハンドラーをサービスに登録
+
+            // ルーティング設定関数（init_routes）を適用
+            .configure(init_routes)
     })
     .bind("0.0.0.0:8080")? // ポート8080でバインド
     .run()

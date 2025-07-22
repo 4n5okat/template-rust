@@ -16,3 +16,6 @@ actix-web = "4"
 # ログ
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["fmt", "json", "env-filter", "time"] }
+
+# .env
+dotenvy = "0.15"
