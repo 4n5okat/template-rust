@@ -40,8 +40,9 @@ RUN cargo build --release
 FROM builder AS development
 # ホットリロード用にcargo-watchをインストール
 RUN cargo install cargo-watch
-# 環境変数を設定 (任意)
-ENV RUST_LOG=actix_web=info
+
+# ログレベルの設定
+ENV RUST_LOG=info
 # 開発サーバーの起動コマンド
 CMD ["cargo", "watch", "-q", "-c", "-w", "src/", "-x", "run"]
 
@@ -55,5 +56,9 @@ WORKDIR /app
 COPY --from=builder /app/target/release/app .
 # ポートを開放
 EXPOSE 8080
+
+# ログレベルの設定
+ENV RUST_LOG=info
+
 # コンテナ起動時のコマンド
 CMD ["./app"]
